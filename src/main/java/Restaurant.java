@@ -2,19 +2,21 @@ import org.sql2o.*;
 import java.util.List;
 
 public class Restaurant {
-  private int mId;
-  private String mName;
+  private int cuisine_id;
+  private int id;
+  private String name;
 
-  public Restaurant (String name) {
-    this.mName = name;
+  public Restaurant (String name, int cuisine_id) {
+    this.name = name;
+    this.cuisine_id = cuisine_id;
   }
 
   public int getId() {
-    return mId;
+    return id;
   }
 
   public String getName() {
-    return mName;
+    return name;
   }
 
   @Override
@@ -31,6 +33,8 @@ public class Restaurant {
   //CREATE
   public void save() {
     try (Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO restaurants (name, cuisine_id) VALUES (:name, :cuisine_id)";
+
       /******************************************************
         Students: TODO: Display all restaurants on main page
       *******************************************************/
@@ -48,27 +52,27 @@ public class Restaurant {
   //
   // //UPDATE
   // public void update(String newName) {
-  //   this.mName = newName;
+  //   this.name = newName;
   //   try(Connection con = DB.sql2o.open()) {
   //     /******************************************************
   //       Students: TODO: Display all restaurants on main page
   //     *******************************************************/
   //     }
   // }
-  //
-  // //DELETE
-  // public void delete() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     /******************************************************
-  //       Students: TODO: Display all restaurants on main page
-  //     *******************************************************/
-  //   }
-  // }
-  //
-  // /******************************************************
-  //   Students:
-  //   TODO: Create find method
-  //   TODO: Create method to get cuisine type
-  // *******************************************************/
+
+  //DELETE
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      /******************************************************
+        Students: TODO: Display all restaurants on main page
+      *******************************************************/
+    }
+  }
+
+  /******************************************************
+    Students:
+    TODO: Create find method
+    TODO: Create method to get cuisine type
+  *******************************************************/
 
 }
