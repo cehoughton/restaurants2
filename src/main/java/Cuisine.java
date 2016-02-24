@@ -2,19 +2,19 @@ import org.sql2o.*;
 import java.util.List;
 
 public class Cuisine {
-  private int mId;
-  private String mType;
+  private int cuisine_id;
+  private String type;
 
   public Cuisine (String type) {
-    this.mType = type;
+    this.type = type;
   }
 
   public int getId() {
-    return mId;
+    return cuisine_id;
   }
 
   public String getType() {
-    return mType;
+    return type;
   }
 
   @Override
@@ -30,8 +30,13 @@ public class Cuisine {
 
   //CREATE
   public void save() {
-    try (Connection con = DB.sql2o.open()) {
-      /******************************************************
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO Cuisine(type) VALUES (:type)";
+      this.cuisine_id = (int) con.createQuery(sql, true)
+        .addParameter("type", this.type)
+        .executeUpdate()
+        .getKey();
+/******************************************************
         Students: TODO: Create sql query and execute update
       *******************************************************/
     }
@@ -39,7 +44,9 @@ public class Cuisine {
 
   //READ
   public static List<Cuisine> all() {
+    String sql = "SELECT cuisine_id, type FROM Cuisine";
     try (Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql).executeAndFetch(Cuisine.class);
       /******************************************************
         Students: TODO: Create sql query and execute update
       *******************************************************/
@@ -48,8 +55,13 @@ public class Cuisine {
 
   //UPDATE
   public void update(String newType) {
-    this.mType = newType;
+    this.type = newType;
     try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE cuisine SET type = :type WHERE cuisine_id = :cuisine_id";
+     con.createQuery(sql)
+      .addParameter("type", type)
+      .addParameter("cuisine_id", cuisine_id)
+      .executeUpdate();
       /******************************************************
         Students: TODO: Create sql query and execute update
       *******************************************************/
