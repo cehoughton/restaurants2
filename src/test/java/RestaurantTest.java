@@ -42,11 +42,11 @@ public class RestaurantTest {
     assertTrue(myRestaurant.equals(savedRestaurant));
   }
 
-  @Test
-  public void delete_deleteRestaurantInDatabase_true() {
-    Restaurant myRestaurant = new Restaurant("Biwa", 1);
-    myRestaurant.save();
-    myRestaurant.delete();
-    assertEquals(Restaurant.all().size(), 0);
-  }
+  // @Test
+  // public void delete_deleteRestaurantInDatabase_true() {
+  //   Restaurant myRestaurant = new Restaurant("Biwa", 1);
+  //   myRestaurant.save();
+  //   myRestaurant.deleteRestaurant();
+  //   assertEquals(Restaurant.all().size(), 0);
+  // }
 }

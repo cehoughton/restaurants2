@@ -28,4 +28,26 @@ public class AppTest extends FluentTest {
     goTo("http://localhost:4567/");
     assertThat(pageSource()).contains("");
   }
+
+  @Test
+  public void cuisineIsCreatedTest() {
+  goTo("http://localhost:4567/");
+  fill("#type").with("American");
+  submit(".btn-success");
+  assertThat(pageSource()).contains("American");
+  }
+
+  @Test
+  public void allRestaurantsDisplayDescriptionOnCuisinePage() {
+    Cuisine myCuisine = new Cuisine("American");
+    myCuisine.save();
+    Restaurant firstRestaurant = new Restaurant("Killer Burger", myCuisine.getId());
+    firstRestaurant.save();
+    Restaurant secondRestaurant = new Restaurant("Los Pollos", myCuisine.getId());
+    secondRestaurant.save();
+    String cuisinePath = String.format("http://localhost:4567/%d", myCuisine.getId());
+    goTo(cuisinePath);
+    assertThat(pageSource()).contains("Killer Burger");
+    assertThat(pageSource()).contains("Los Pollos");
+  }
 }

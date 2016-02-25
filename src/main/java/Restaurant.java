@@ -77,11 +77,11 @@ public class Restaurant {
   // }
 
   //DELETE
-  public void deleteRestaurant() {
+  public static void deleteRestaurant(int id) {
     try(Connection con = DB.sql2o.open()) {
-    String sql = "DELETE FROM restaurants WHERE cuisine_id = :cuisine_id;";
+    String sql = "DELETE FROM restaurants WHERE id = :id";
     con.createQuery(sql)
-      .addParameter("cuisine_id", cuisine_id)
+      .addParameter("id", id)
       .executeUpdate();
   }
       /******************************************************
