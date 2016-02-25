@@ -18,4 +18,35 @@ public class RestaurantTest {
     Restaurant secondRestaurant = new Restaurant("Biwa", 1);
     assertTrue(firstRestaurant.equals(secondRestaurant));
   }
+
+  @Test
+  public void save_returnsTrueIfDescriptionsAretheSame() {
+    Restaurant myRestaurant = new Restaurant("Biwa", 1);
+    myRestaurant.save();
+    assertTrue(Restaurant.all().get(0).equals(myRestaurant));
+  }
+
+  @Test
+  public void save_assingsIdToObject() {
+    Restaurant myRestaurant = new Restaurant("Biwa", 1);
+    myRestaurant.save();
+    Restaurant savedRestaurant = Restaurant.all().get(0);
+    assertEquals(myRestaurant.getId(), savedRestaurant.getId());
+  }
+
+  @Test
+  public void find_findsRestaurantInDatabase_true() {
+    Restaurant myRestaurant = new Restaurant("Biwa", 1);
+    myRestaurant.save();
+    Restaurant savedRestaurant = Restaurant.find(myRestaurant.getId());
+    assertTrue(myRestaurant.equals(savedRestaurant));
+  }
+
+  @Test
+  public void delete_deleteRestaurantInDatabase_true() {
+    Restaurant myRestaurant = new Restaurant("Biwa", 1);
+    myRestaurant.save();
+    myRestaurant.delete();
+    assertEquals(Restaurant.all().size(), 0);
+  }
 }

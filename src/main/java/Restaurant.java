@@ -34,22 +34,38 @@ public class Restaurant {
   public void save() {
     try (Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO restaurants (name, cuisine_id) VALUES (:name, :cuisine_id)";
-
+      this.id = (int) con.createQuery(sql, true)
+      .addParameter("name", this.name)
+      .addParameter("cuisine_id", this.cuisine_id)
+      .executeUpdate()
+      .getKey();
       /******************************************************
         Students: TODO: Display all restaurants on main page
       *******************************************************/
     }
   }
 
-  // //READ
-  // public static List<Restaurant> all() {
-  //   try (Connection con = DB.sql2o.open()) {
-  //     /******************************************************
-  //       Students: TODO: Display all restaurants on main page
-  //     *******************************************************/
-  //   }
-  // }
-  //
+  //READ
+  public static List<Restaurant> all() {
+    String sql = "SELECT id, name, cuisine_id FROM Restaurants";
+    try (Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql).executeAndFetch(Restaurant.class);
+      /******************************************************
+        Students: TODO: Display all restaurants on main page
+      *******************************************************/
+    }
+  }
+
+  public static Restaurant find(int id) {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "SELECT * FROM Restaurants where id=:id";
+    Restaurant restaurant = con.createQuery(sql)
+     .addParameter("id", id)
+     .executeAndFetchFirst(Restaurant.class);
+   return restaurant;
+  }
+}
+
   // //UPDATE
   // public void update(String newName) {
   //   this.name = newName;
@@ -61,8 +77,13 @@ public class Restaurant {
   // }
 
   //DELETE
-  public void delete() {
+  public void deleteRestaurant() {
     try(Connection con = DB.sql2o.open()) {
+    String sql = "DELETE FROM restaurants WHERE cuisine_id = :cuisine_id;";
+    con.createQuery(sql)
+      .addParameter("cuisine_id", cuisine_id)
+      .executeUpdate();
+  }
       /******************************************************
         Students: TODO: Display all restaurants on main page
       *******************************************************/
@@ -74,5 +95,3 @@ public class Restaurant {
     TODO: Create find method
     TODO: Create method to get cuisine type
   *******************************************************/
-
-}
